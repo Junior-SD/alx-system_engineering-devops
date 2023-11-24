@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# a Bash script that creates an RSA key pair.
+# -f flag to set the file name for the private key
+# -P flag to set the passphrase for the key
+
+ssh-keygen -b 4096 -f school -P betty
