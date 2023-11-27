@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# install ngix on my web-01 server
+# ngix should listen on port 80
+# ngix returns a page that contains the string "Hello world!"
+# configure nginx to serve the created HTMl page at the root
+
+sudo apt-get -y update
+sudo apt-get install nginx -y
+
+sudo cp some_page.html /var/www/html/some_page.html
+
+# modify default server block instead of creating new one
+# configure nginx to serve hello world at the root
+
+sudo rm /etc/nginx/sites-enabled/default
+sudo tee /etc/nginx/sites-available/some_page <<EOF
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+
+        location / {
+                root /var/www/html;
+                index some_page.html;
+        }
+}
+EOF
+
+# enable file by creating a link from it
+sudo ln -s /etc/nginx/sites-available/some_page /etc/nginx/sites-enabled/
+
+# restart nginx without using systemctl
+sudo service nginx restart

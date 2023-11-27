@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# a script that configure my Nginx server so that /redirect_me is redirecting to another page
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+
+echo "Hello World!" | sudo tee /var/www/html/some_page.html
+
+# modify default server block instead of creating new one
+# configure nginx to serve hello world at the root
+
+sudo rm /etc/nginx/sites-enabled/default
+sudo rm /etc/nginx/sites-enabled/some_page
+sudo tee /etc/nginx/sites-available/some_page <<EOF
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+
+        location / {
+                root /var/www/html;
+                index some_page.html;
+        }
+
+	if (\$request_filename ~ redirect_me){
+		return 301 http://www.youtube.com/watch?v=QH2-TGUlwu4;
+	}
+}
+EOF
+
+# enable file by creating a link from it
+sudo ln -s /etc/nginx/sites-available/some_page /etc/nginx/sites-enabled/
+
+# restart nginx without using systemctl
+sudo service nginx restart
