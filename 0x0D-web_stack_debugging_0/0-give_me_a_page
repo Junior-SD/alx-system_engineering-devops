@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# a bash script that fixes the web aserver
+
+sudo service apache2 restart
