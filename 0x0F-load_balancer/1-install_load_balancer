@@ -1,0 +1,10 @@
+ bash script that installs HAproxy on a load balancer server to
+# serve two web servers and distrubute requests using the default
+# round robin algorithm
+
+apt-get -y install software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-2.0
+apt-get -y update
+apt-get -y install haproxy=2.0.\*
+echo -e "\nfrontend http\n\tbind *:80\n\tmode http\n\tdefault_backend web-backend\n\nbackend web-backend\n\tbalance roundrobin\n\tserver 297651-web-01 54.82.132.33:80 check\n\tserver 297651-web-02 54.197.206.10:80 check" >> /etc/haproxy/haproxy.cfg
+service haproxy restart
