@@ -1,4 +1,4 @@
- puppet manifest that installs nginx on a new server and
+# a puppet manifest that installs nginx on a new server and
 # configures a custom HTTP header response
 
 

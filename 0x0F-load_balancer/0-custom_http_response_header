@@ -1,4 +1,5 @@
- bash script that Configure Nginx so that its HTTP response
+#!/usr/bin/env bash
+# A bash script that Configure Nginx so that its HTTP response
 # contains a custom header on two servers
 
 sudo apt-get -y update
