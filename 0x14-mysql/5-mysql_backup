@@ -1,0 +1,6 @@
+ bash script that creates a MySQL dump and creates an tar.gz
+# archive from the MySQL dump
+file_name="backup.sql"
+current_date=$(date -u '+%d-%m-%Y')
+sudo mysqldump -uroot -p"$1" --all-databases > $file_name
+tar -czvf "$current_date.tar.gz" "$file_name"
